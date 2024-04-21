@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    public float speed = 30;
+    public float speed = 30f;
     private Vector2 initialPosition;
     private Rigidbody2D rb;
 
     void Start()
     {
-        initialPosition = GetComponent<Transform>().position;
+        initialPosition = calculateInitialPosition();
         rb = GetComponent<Rigidbody2D>();
 
         // Initial Velocity
-        rb.velocity = Vector2.right * speed;
+        rb.velocity = calculateInitialDirection() * speed;
+    }
+
+    Vector2 calculateInitialPosition() {
+        if (GameController.instance.lastPlayerToScore == 1) {
+            return new Vector2(10f, 0f);
+        }
+        return new Vector2(-10f, 0f);
+    }
+
+    Vector2 calculateInitialDirection() {
+        if (GameController.instance.lastPlayerToScore == 1) {
+            return Vector2.left;
+        }
+        return Vector2.right;
     }
 
     float hitFactor(Vector2 ballPos, Vector2 playerPos, float playerHeight)
@@ -56,7 +70,7 @@ public class BallController : MonoBehaviour
 
         gameObject.GetComponent<AudioSource>().Play(0);
 
-        gameObject.transform.position = initialPosition;
-        rb.velocity = Vector2.right * speed;
+        gameObject.transform.position = calculateInitialPosition();
+        rb.velocity = calculateInitialDirection() * speed;
     }
 }
