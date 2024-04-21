@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -31,5 +32,15 @@ public class GameController : MonoBehaviour
 
         if (player == 1) scorePlayer1++; else scorePlayer2++;
         scoreText.text = scorePlayer1.ToString() + "  -  " + scorePlayer2.ToString();
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void HowToPlay()
+    {
+        SceneManager.LoadScene(1);
     }
 }
