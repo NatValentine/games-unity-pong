@@ -20,6 +20,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (isPaused) {
+                Resume();
+            } else {
+                Pause();
+            }
+        }
+    }
+
     public Text scoreText;
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
@@ -34,6 +44,23 @@ public class GameController : MonoBehaviour
         scoreText.text = scorePlayer1.ToString() + "  -  " + scorePlayer2.ToString();
     }
 
+    public bool isPaused = false;
+    public GameObject pauseMenu;
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene(2);
@@ -42,5 +69,11 @@ public class GameController : MonoBehaviour
     public void HowToPlay()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void BackToTitle()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }
